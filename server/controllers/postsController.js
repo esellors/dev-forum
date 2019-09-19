@@ -1,14 +1,37 @@
 module.exports = {
-   topics: (req, res) => {
+   topics: async (req, res) => {
+      const db = req.app.get('db');
 
+      const topics = await db.topics.getTopics();
+
+      res.status(200).json(topics);
    },
-   posts: (req, res) => {
+   posts: async (req, res) => {
+      const topicId = +req.params.topicId;
+      const db = req.app.get('db');
 
+      const posts = await db.posts.getTopicPosts(topicId);
+
+      res.status(200).json(posts)
    },
-   addPost: (req, res) => {
+   addPost: async (req, res) => {
+      const {topicId, userId, userPost} =req.body;
+      const db = req.app.get('db');
 
+      if (!userPost) {
+         res.status(409).json("Post is empty.")
+      } else {
+         const posts = await db.posts.addPost(topicId, userId, userPost);
+
+         res.status(200).json(posts);
+      }
    },
-   deletePost: (req, res) => {
+   deletePost: async (req, res) => {
+      const {topicId, postId} = req.body;
+      const db = req.app.get('db');
 
+      const posts = await db.posts.deletePost(topicId, postId);
+
+      res.status(200).json(posts);
    }
 }
