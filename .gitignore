@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# privacy
+.env
+
 # testing
 /coverage
 
