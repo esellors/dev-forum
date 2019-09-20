@@ -44,26 +44,26 @@ export default function reducer(state = initialState, action) {
    const {type, payload} = action;
 
    switch(type) {
-      case GET_SESSION:
+      case `${GET_SESSION}_FULFILLED`:
          return {
             ...state,
-            userId: payload.user_id,
-            username: payload.username,
-            firstName: payload.firstName
+            userId: payload.data.user_id,
+            username: payload.data.username,
+            firstName: payload.data.firstName
          };
-      case REGISTER_USER:
+      case `${REGISTER_USER}_FULFILLED`:
          return {
             ...state,
-            userId: payload.user_id,
-            username: payload.username,
-            firstName: payload.firstName
+            userId: payload.data.user_id,
+            username: payload.data.username,
+            firstName: payload.data.firstName
          };
-      case LOGIN_USER:
+      case `${LOGIN_USER}_FULFILLED`:
          return {
             ...state,
-            userId: payload.user_id,
-            username: payload.username,
-            firstName: payload.firstName
+            userId: payload.data.user_id,
+            username: payload.data.username,
+            firstName: payload.data.firstName
          };
       case LOGOUT_USER:
          return {

@@ -1,0 +1,8 @@
+#topics-mapped {
+   display: flex;
+   justify-content: space-around;
+}
+
+.topics {
+   border: 1px solid #000;
+}

@@ -1,0 +1,8 @@
+#posts-mapped {
+   display: flex;
+   justify-content: space-around;
+}
+
+.posts {
+   border: 1px solid #000;
+}
