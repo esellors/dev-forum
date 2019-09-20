@@ -8,6 +8,7 @@ const initialState = {
 const UPDATE_TOPICS = 'UPDATE_TOPICS';
 const UPDATE_POSTS = 'UPDATE_POSTS';
 const ADD_POST = 'ADD_POST';
+const EDIT_POST = 'EDIT_POST';
 const DELETE_POST = 'DELETE_POST';
 
 export function updateTopics() {
@@ -31,11 +32,17 @@ export function addPost(newPost) {
    }
 }
 
+export function editPost(postInfo) {
+   return {
+      type: EDIT_POST,
+      payload: Axios.put('/api/posts/', postInfo)
+   }
+}
+
 export function deletePost(postInfo) {
-   console.log(postInfo)
    return {
       type: DELETE_POST,
-      payload: Axios.delete('/api/posts/', { data: postInfo} )
+      payload: Axios.delete('/api/posts/', { data: postInfo})
    }
 }
 
@@ -55,6 +62,11 @@ export default function reducer(state = initialState, action) {
             posts: payload.data
          }
       case `${ADD_POST}_FULFILLED`:
+         return {
+            ...state,
+            posts: payload.data
+         }
+      case `${EDIT_POST}_FULFILLED`:
          return {
             ...state,
             posts: payload.data

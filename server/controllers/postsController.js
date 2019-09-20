@@ -26,6 +26,15 @@ module.exports = {
          res.status(200).json(posts);
       }
    },
+   editPost: async (req, res) => {
+      console.log(req.body)
+      const {topicId, postId, editedPost} = req.body;
+      const db = req.app.get('db');
+
+      const posts = await db.posts.editPost(topicId, postId, editedPost);
+
+      res.status(200).json(posts)
+   },
    deletePost: async (req, res) => {
       const {topicId, postId} = req.body;
       console.log(req.body.topicId)

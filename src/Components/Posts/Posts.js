@@ -1,17 +1,29 @@
 import React from 'react';
 import './Posts.css';
 import {connect} from 'react-redux';
-import {updatePosts, addPost, deletePost} from '../../redux/reducers/postsReducer';
+import {updatePosts, addPost, editPost, deletePost} from '../../redux/reducers/postsReducer';
 import AddPost from '../AddPost/AddPost';
 
 class Posts extends React.Component {
+   constructor() {
+      super();
+      this.state = {
+          editedPost: ''
+      };
+   };
    componentDidMount() {
       this.props.updatePosts(this.props.match.params.topicId);
    }
+   handleInput = e => {
+      this.setState({editedPost: e.target.value})
+   }
+   handleEdit = (topicId, postId) => {
+      const postInfo = {topicId, postId, editedPost: this.state.editedPost};
+
+      this.props.editPost(postInfo)
+   }
    handleDelete = (topicId, postId) => {
-      const postInfo = {topicId, postId}
-      console.log(topicId)
-      console.log(postId)
+      const postInfo = {topicId, postId};
 
       this.props.deletePost(postInfo);
    }
@@ -25,8 +37,18 @@ class Posts extends React.Component {
                   this.props.userId === post.user_id
                   ? (
                      <>
-                        <button>edit</button>
-                        <button onClick={() => this.handleDelete(post.topic_id, post.post_id)}>delete</button>
+                        <input
+                           type='text'
+                           placeholder='edit post'
+                           onChange={this.handleInput}
+                        />
+                        <button
+                           onClick={() => this.handleEdit(post.topic_id, post.post_id)}
+                        >edit</button>
+
+                        <button 
+                           onClick={() => this.handleDelete(post.topic_id, post.post_id)}
+                        >delete</button>
                      </>
                   )
                   : null
@@ -58,6 +80,7 @@ export default connect(mapStateToProps,
    {
       updatePosts,
       addPost,
+      editPost,
       deletePost
    }
 )(Posts);
